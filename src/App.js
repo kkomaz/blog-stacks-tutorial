@@ -1,8 +1,9 @@
 import React, { Component } from 'react';
 import 'stylesheets/main.scss';
-import { Button } from 'react-bulma-components'
+import { Button, Container } from 'react-bulma-components'
 import { appConfig } from 'utils/constants'
 import { UserSession } from 'blockstack'
+import Login from 'components/Login'
 
 class App extends Component {
   state = {
@@ -23,11 +24,6 @@ class App extends Component {
     }
   }
 
-  handleSignIn = () => {
-    const { userSession } = this.state
-    userSession.redirectToSignIn()
-  }
-
   handleSignOut = () => {
     const { userSession } = this.state
     userSession.signUserOut()
@@ -39,15 +35,15 @@ class App extends Component {
 
     return (
       <div className="App">
-        {
-          userSession.isUserSignedIn() ?
-          <Button color="primary" onClick={this.handleSignOut}>
-            Sign Out
-          </Button> :
-          <Button color="primary" onClick={this.handleSignIn}>
-            Sign In
-          </Button>
-        }
+        <Container>
+          {
+            userSession.isUserSignedIn() ?
+            <Button color="primary" onClick={this.handleSignOut}>
+              Sign Out
+            </Button> :
+            <Login userSession={userSession} />
+          }
+        </Container>
       </div>
     );
   }
