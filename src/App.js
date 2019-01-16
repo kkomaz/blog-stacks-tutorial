@@ -1,9 +1,10 @@
 import React, { Component } from 'react';
 import 'stylesheets/main.scss';
-import { Button, Container } from 'react-bulma-components'
+import { Container } from 'react-bulma-components'
 import { appConfig } from 'utils/constants'
 import { UserSession } from 'blockstack'
 import Login from 'components/Login'
+import NavbarComp from 'components/Navbar'
 
 class App extends Component {
   state = {
@@ -24,23 +25,16 @@ class App extends Component {
     }
   }
 
-  handleSignOut = () => {
-    const { userSession } = this.state
-    userSession.signUserOut()
-    window.location = '/'
-  }
-
   render() {
     const { userSession } = this.state
 
     return (
       <div className="App">
+        <NavbarComp userSession={userSession} />
         <Container>
           {
             userSession.isUserSignedIn() ?
-            <Button color="primary" onClick={this.handleSignOut}>
-              Sign Out
-            </Button> :
+            <div>You are signed in</div> :
             <Login userSession={userSession} />
           }
         </Container>
