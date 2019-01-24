@@ -5,6 +5,7 @@ import { appConfig } from 'utils/constants'
 import { UserSession } from 'blockstack'
 import Login from 'components/Login'
 import NavbarComp from 'components/Navbar'
+import Routes from 'pages/routes'
 
 class App extends Component {
   state = {
@@ -34,7 +35,7 @@ class App extends Component {
         <Container>
           {
             userSession.isUserSignedIn() ?
-            <div>You are signed in</div> :
+            <Routes userSession={userSession} /> :
             <Login userSession={userSession} />
           }
         </Container>
