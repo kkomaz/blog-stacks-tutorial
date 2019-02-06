@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { Switch, Route } from 'react-router-dom'
+import AdminPostCreate from 'pages/admin/_username/posts/create'
 
 class AdminUsernamePostsRoutes extends Component {
   static propTypes = {
@@ -17,7 +18,7 @@ class AdminUsernamePostsRoutes extends Component {
         />
         <Route
           path={`${this.props.match.url}/create`}
-          render={() => <div>Admin create post page</div>}
+          render={() => <AdminPostCreate />}
         />
         <Route
           exact
