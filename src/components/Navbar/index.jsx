@@ -1,14 +1,26 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { Navbar } from 'react-bulma-components'
+import { withRouter } from 'react-router-dom'
 
-export default class NavbarComp extends Component {
+export class NavbarComp extends Component {
   state = {
-    open: false
+    open: false,
+    user: {}
   }
 
   static propTypes = {
-    userSession: PropTypes.object.isRequired
+    userSession: PropTypes.object.isRequired,
+    history: PropTypes.object.isRequired,
+  }
+
+  componentDidMount() {
+    const { userSession } = this.props
+
+    if (userSession.isUserSignedIn()) {
+      const user = userSession.loadUserData()
+      this.setState({ user })
+    }
   }
 
   handleSignOut = () => {
@@ -19,6 +31,20 @@ export default class NavbarComp extends Component {
 
   toggleNavBar = () => {
     this.setState({ open: !this.state.open })
+  }
+
+  goToAdminPosts = () => {
+    const { history } = this.props
+    const { user } = this.state
+
+    return history.push(`/admin/${user.username}/posts`)
+  }
+
+  goToAdminProfile = () => {
+    const { history } = this.props
+    const { user } = this.state
+
+    return history.push(`/admin/${user.username}`)
   }
 
   render() {
@@ -45,10 +71,10 @@ export default class NavbarComp extends Component {
             {
               isSignedIn &&
               <React.Fragment>
-                <Navbar.Item>
+                <Navbar.Item onClick={this.goToAdminPosts}>
                   Posts
                 </Navbar.Item>
-                <Navbar.Item>
+                <Navbar.Item onClick={this.goToAdminProfile}>
                   My Profile
                 </Navbar.Item>
                 <Navbar.Item onClick={this.handleSignOut}>
@@ -62,3 +88,5 @@ export default class NavbarComp extends Component {
     )
   }
 }
+
+export default withRouter(NavbarComp)

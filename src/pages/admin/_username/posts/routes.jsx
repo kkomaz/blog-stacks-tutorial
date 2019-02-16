@@ -3,6 +3,7 @@ import PropTypes from 'prop-types'
 import { Switch, Route } from 'react-router-dom'
 import AdminPostCreate from 'pages/admin/_username/posts/create'
 import AdminPosts from 'pages/admin/_username/posts'
+import AdminPostView from 'pages/admin/_username/posts/_post_id'
 
 class AdminUsernamePostsRoutes extends Component {
   static propTypes = {
@@ -24,7 +25,7 @@ class AdminUsernamePostsRoutes extends Component {
         <Route
           exact
           path={`${this.props.match.url}/:post_id`}
-          render={() => <div>Admin view page</div>}
+          render={({ match }) => <AdminPostView match={match} />}
         />
         <Route
           path={`${this.props.match.url}/:post_id/edit`}

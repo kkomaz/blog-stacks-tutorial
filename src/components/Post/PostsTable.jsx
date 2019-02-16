@@ -6,9 +6,15 @@ import { withRouter } from 'react-router-dom'
 
 class PostsTable extends Component {
   static propTypes = {
-    userSession: PropTypes.object.isRequired,
     username: PropTypes.string.isRequired,
-    posts: PropTypes.array.isRequired
+    posts: PropTypes.array.isRequired,
+    history: PropTypes.object.isRequired,
+  }
+
+  viewAdminPost(post) {
+    const { history, username } = this.props
+
+    return history.push(`/admin/${username}/posts/${post.id}`)
   }
 
   displayAdminOptions(post) {
@@ -24,7 +30,7 @@ class PostsTable extends Component {
         <Button
           className="mr-one"
           color="info"
-          onClick={() => console.log('clicking the view button!')}
+          onClick={() => this.viewAdminPost(post)}
         >
           View
         </Button>
