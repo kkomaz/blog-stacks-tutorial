@@ -88,20 +88,11 @@ class PostForm extends Component {
     this.createPost()
   }
 
-  seeRandom = async () => {
-    const { userSession } = this.props
-
-    await userSession.getFile('random.json', { decrypt: false })
-  }
-
   render() {
     return (
       <Card>
         <Card.Content>
           <Content>
-            <Button onClick={this.seeRandom}>
-              See Random
-            </Button>
             <form onSubmit={this.onSubmit} className="post-form">
               <Field>
                 <Label>Title</Label>
