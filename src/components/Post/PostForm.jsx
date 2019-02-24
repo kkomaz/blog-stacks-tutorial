@@ -18,15 +18,23 @@ import { POST_FILENAME } from 'utils/constants'
 import generateUUID from 'utils/generateUUID'
 
 class PostForm extends Component {
-  state = {
-    title: '',
-    description: '',
-    posts: [],
+  constructor(props) {
+    super(props)
+
+    const { post } = props
+
+    this.state = {
+      title: post.title || '', // returns an edited post or starting a new post
+      description: post.description || '', // returns an edited post or starting a new post
+      posts: [],
+    }
   }
 
   static propTypes = {
     userSession: PropTypes.object.isRequired,
-    username: PropTypes.string.isRequired
+    username: PropTypes.string.isRequired,
+    post: PropTypes.object,
+    type: PropTypes.string.isRequired,
   }
 
   componentDidMount() {
@@ -44,6 +52,46 @@ class PostForm extends Component {
     }
 
     return null
+  }
+
+  editPost = async () => {
+    const options = { encrypt: false }
+    const { title, description, posts } = this.state
+    const { history, userSession, username, post } = this.props
+
+    // for posts.json
+    const params = {
+      id: post.id,
+      title,
+    }
+
+    // for post-${post-id}.json
+    const detailParams = {
+      ...params,
+      description,
+    }
+
+    const editedPostsForIndex = _.map(posts, (p) => {
+      if (p.id === post.id) {
+        return params
+      }
+
+      return p
+    })
+
+    try {
+      await userSession.putFile(POST_FILENAME, JSON.stringify(editedPostsForIndex), options)
+      await userSession.putFile(`post-${post.id}.json`, JSON.stringify(detailParams), options)
+
+      this.setState({
+        description: '',
+        title: ''
+      }, () => {
+        history.push(`/admin/${username}/posts`)
+      })
+    } catch (e) {
+      console.log(e.message)
+    }
   }
 
   createPost = async () => {
@@ -85,7 +133,10 @@ class PostForm extends Component {
 
   onSubmit = (e) => {
     e.preventDefault()
-    this.createPost()
+
+    const { type } = this.props
+
+    return type === 'edit' ? this.editPost() : this.createPost()
   }
 
   render() {

@@ -11,6 +11,12 @@ class PostsTable extends Component {
     history: PropTypes.object.isRequired,
   }
 
+  editAdminPost(post) {
+    const { history, username } = this.props
+
+    return history.push(`/admin/${username}/posts/${post.id}/edit`)
+  }
+
   viewAdminPost(post) {
     const { history, username } = this.props
 
@@ -23,7 +29,7 @@ class PostsTable extends Component {
         <Button
           className="mr-one"
           color="warning"
-          onClick={() => console.log('clicking the edit button!')}
+          onClick={() => this.editAdminPost(post)}
         >
           Edit
         </Button>
