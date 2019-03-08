@@ -21,7 +21,7 @@ class PostForm extends Component {
   constructor(props) {
     super(props)
 
-    const { post } = props
+    const { post = {} } = props
 
     this.state = {
       title: post.title || '', // returns an edited post or starting a new post

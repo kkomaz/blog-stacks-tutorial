@@ -10,11 +10,11 @@ class AdminPostView extends Component {
 
   render() {
     const { match } = this.props
-    const { userSession } = this.context.state.currentUser
+    const { userSession, username } = this.context.state.currentUser
 
     return (
       <div className="admin-post-view">
-        <PostDetailView match={match} userSession={userSession} />
+        <PostDetailView match={match} userSession={userSession} username={username} />
       </div>
     )
   }

@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import _ from 'lodash'
 import {
   Card,
   Content,
@@ -33,9 +34,27 @@ class AdminPosts extends Component {
     }
   }
 
+  deletePost = async (postId) => {
+    const { userSession } = this.context.state.currentUser
+    const { posts } = this.state
+    const options = { encrypt: false }
+
+    const filteredPosts = _.filter(posts, (post) => post.id !== postId)
+
+    try {
+      await userSession.putFile(POST_FILENAME, JSON.stringify(filteredPosts), options)
+      await userSession.putFile(`post-${postId}.json`, '', options)
+      this.setState({ posts: filteredPosts })
+    } catch (e) {
+      console.log(e.message)
+    }
+  }
+
   render() {
     const { posts } = this.state
     const { username } = this.context.state.currentUser
+
+    console.log(posts)
 
     return (
       <Card>
@@ -44,6 +63,7 @@ class AdminPosts extends Component {
             <PostsTable
               posts={posts}
               username={username}
+              deletePost={this.deletePost}
             />
           </Content>
         </Card.Content>

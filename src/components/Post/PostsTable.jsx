@@ -6,9 +6,14 @@ import { withRouter } from 'react-router-dom'
 
 class PostsTable extends Component {
   static propTypes = {
+    deletePost: PropTypes.func.isRequired,
     username: PropTypes.string.isRequired,
     posts: PropTypes.array.isRequired,
     history: PropTypes.object.isRequired,
+  }
+
+  deletePost(post) {
+    this.props.deletePost(post.id)
   }
 
   editAdminPost(post) {
@@ -43,7 +48,7 @@ class PostsTable extends Component {
 
         <Button
           color="danger"
-          onClick={() => console.log('clicking the delete button!')}
+          onClick={() => this.deletePost(post)}
         >
           Delete
         </Button>
