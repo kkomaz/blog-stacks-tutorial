@@ -1,12 +1,27 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
-import { Switch, Route } from 'react-router-dom'
+import { Switch, Route, withRouter } from 'react-router-dom'
 import AdminUsernamePostsRoutes from 'pages/admin/_username/posts/routes'
 import AdminUsername from 'pages/admin/_username'
+import { MyContext } from 'components/User/UserProvider'
 
 class AdminUsernameRoute extends Component {
   static propTypes = {
-    match: PropTypes.object.isRequired
+    match: PropTypes.object.isRequired,
+    history: PropTypes.object.isRequired
+  }
+
+  componentDidMount() {
+    // 1. current username
+    const { username } = this.context.state.currentUser
+
+    // 2. username that is being viewed
+    const { match, history } = this.props
+
+    if (match.params.username !== username) {
+      // history.push(actualAdminPage)
+      return history.push(`/admin/${username}`)
+    }
   }
 
   render() {
@@ -28,4 +43,5 @@ class AdminUsernameRoute extends Component {
   }
 }
 
-export default AdminUsernameRoute
+export default withRouter(AdminUsernameRoute)
+AdminUsernameRoute.contextType = MyContext
