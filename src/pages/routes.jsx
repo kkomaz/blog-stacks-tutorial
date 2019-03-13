@@ -4,6 +4,7 @@ import { Switch, Route, Redirect } from 'react-router-dom'
 import UserProvider from 'components/User/UserProvider'
 import Loader from 'components/Loader'
 import AdminUsernameRoute from 'pages/admin/_username/routes'
+import UsernamePostsRoute from 'pages/_username/routes'
 
 class Routes extends Component {
   state = { user: {} }
@@ -35,6 +36,10 @@ class Routes extends Component {
           <Route
             path="/admin/:username"
             render={({ match }) => <AdminUsernameRoute match={match} />}
+          />
+          <Route
+            path="/:username/posts"
+            render={({ match }) => <UsernamePostsRoute match={match} />}
           />
         </Switch>
       </UserProvider>
