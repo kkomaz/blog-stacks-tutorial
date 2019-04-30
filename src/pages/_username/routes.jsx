@@ -6,6 +6,7 @@ import { POST_FILENAME } from 'utils/constants'
 import { lookupProfile } from 'blockstack'
 import Error from 'components/Error'
 import PostsTable from 'components/Post/PostsTable'
+import PostDetailView from 'components/Post/PostDetailView'
 
 class UsernamePostsRoute extends Component {
   state = {
@@ -54,6 +55,8 @@ class UsernamePostsRoute extends Component {
 
   render() {
     const { match } = this.props
+    const { username } = match.params
+    const { userSession } = this.context.state.currentUser
 
     if (!this.state.loading && this.state.error) {
       return <Error errorMessage={this.state.error} />
@@ -74,7 +77,13 @@ class UsernamePostsRoute extends Component {
         />
         <Route
           path={`/${match.params.username}/posts/:post_id`}
-          render={() => <div>Post Detail View</div>}
+          render={() =>
+            <PostDetailView
+              userSession={userSession}
+              match={match}
+              username={username}
+            />
+          }
         />
       </Switch>
     )

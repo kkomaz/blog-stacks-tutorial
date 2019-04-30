@@ -17,7 +17,7 @@ class PostDetailView extends Component {
 
   componentDidMount = async () => {
     const { userSession, match, history, username } = this.props
-    const options = { decrypt: false }
+    const options = { decrypt: false, username }
 
     const result = await userSession.getFile(`post-${match.params.post_id}.json`, options)
 
