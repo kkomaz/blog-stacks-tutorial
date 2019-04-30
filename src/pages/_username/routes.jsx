@@ -5,6 +5,7 @@ import { MyContext } from 'components/User/UserProvider'
 import { POST_FILENAME } from 'utils/constants'
 import { lookupProfile } from 'blockstack'
 import Error from 'components/Error'
+import PostsTable from 'components/Post/PostsTable'
 
 class UsernamePostsRoute extends Component {
   state = {
@@ -62,7 +63,13 @@ class UsernamePostsRoute extends Component {
       <Switch>
         <Route
           path={`/${match.params.username}/posts`}
-          render={() => <div>Posts Table</div>}
+          render={() =>
+            <PostsTable
+              posts={this.state.posts}
+              username={match.params.username}
+              type="public"
+            />
+          }
           exact
         />
         <Route

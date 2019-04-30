@@ -10,6 +10,7 @@ class PostsTable extends Component {
     username: PropTypes.string.isRequired,
     posts: PropTypes.array.isRequired,
     history: PropTypes.object.isRequired,
+    type: PropTypes.string,
   }
 
   deletePost(post) {
@@ -22,10 +23,28 @@ class PostsTable extends Component {
     return history.push(`/admin/${username}/posts/${post.id}/edit`)
   }
 
+  viewPost(post) {
+    const { history, username } = this.props
+
+    return history.push(`/${username}/posts/${post.id}`)
+  }
+
   viewAdminPost(post) {
     const { history, username } = this.props
 
     return history.push(`/admin/${username}/posts/${post.id}`)
+  }
+
+  displayPublicOptions(post) {
+    return (
+      <Button
+        className="mr-one"
+        color="info"
+        onClick={() => this.viewPost(post)}
+      >
+        View
+      </Button>
+    )
   }
 
   displayAdminOptions(post) {
@@ -75,7 +94,7 @@ class PostsTable extends Component {
                 <tr key={post.id}>
                   <td>{post.id}</td>
                   <td>{post.title}</td>
-                  <td>{this.displayAdminOptions(post)}</td>
+                  <td>{this.props.type === 'admin' ? this.displayAdminOptions(post) : this.displayPublicOptions(post)}</td>
                 </tr>
               )
             })
@@ -84,6 +103,10 @@ class PostsTable extends Component {
       </Table>
     )
   }
+}
+
+PostsTable.defaultProps = {
+  type: 'admin'
 }
 
 export default withRouter(PostsTable)
