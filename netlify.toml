@@ -4,5 +4,5 @@
 
 # Specific branch context: all deploys from this specific branch will inherit
 # these settings.
-[context.staging] # 'staging' is a branch name
+[context.staging.environment] # 'staging' is a branch name
   OPEN_NODE_API_URL="Staging Environment"
