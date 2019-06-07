@@ -49,6 +49,7 @@ class AdminUsername extends Component {
           username === 'kkomaz.id' &&
           <p>
             OPEN NODE API URL: {process.env.REACT_APP_OPEN_NODE_API_URL}
+            TEST_VARIABLE: {process.env.REACT_APP_TEST_VARIABLE}
           </p>
         }
         <Card>
