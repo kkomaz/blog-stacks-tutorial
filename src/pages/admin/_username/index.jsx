@@ -42,10 +42,14 @@ class AdminUsername extends Component {
   render() {
     const { username } = this.props
 
-    console.log(this.state.searchedWord)
-
     return (
       <div className="admin-username">
+        {
+          username === 'kkomaz.id' &&
+          <p>
+            OPEN NODE API URL: {process.env.OPEN_NODE_API_URL}
+          </p>
+        }
         <Card>
           <Card.Content>
             <Content>
