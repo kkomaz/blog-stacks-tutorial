@@ -4,6 +4,9 @@ import App from './App';
 import * as serviceWorker from './serviceWorker';
 import { BrowserRouter } from 'react-router-dom'
 
+const f = process.env.OPEN_NODE_API_URL
+console.log(f)
+
 ReactDOM.render(
   <BrowserRouter>
     <App />
