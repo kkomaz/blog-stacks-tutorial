@@ -42,7 +42,7 @@ class AdminUsername extends Component {
   render() {
     const { username } = this.props
 
-    console.log(process.env)
+    console.log(process.env);
 
     return (
       <div className="admin-username">
